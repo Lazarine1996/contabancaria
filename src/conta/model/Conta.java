@@ -47,6 +47,8 @@ public abstract class Conta {
 
 	public String getTitular() {
 		return titular;
+		
+		
 	}
 
 	public void setTitular(String titular) {
