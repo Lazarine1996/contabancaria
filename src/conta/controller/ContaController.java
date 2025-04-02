@@ -12,14 +12,13 @@ public class ContaController implements ContaRepository {
 
 	@Override
 	public void procurarPorNumero(int numero) {
-		var conta=buscarNaCollection(numero);
-		
-		if conta != null)
-conta.visualizador();
-		else 
-	System.out.println("\nA conta número: " + numero + "não foi encontrada!");
+		var conta = buscarNaCollection(numero);
 
-		
+		if (conta != null)
+			conta.visualizador();
+		else
+			System.out.println("\nA conta número: " + numero + "não foi encontrada!");
+
 	}
 
 	@Override
@@ -62,19 +61,42 @@ conta.visualizador();
 
 	@Override
 	public void sacar(int numero, float valor) {
-		// TODO Auto-generated method stub
+		var conta = buscarNaCollection(numero);
 
+		if (conta != null) {
+
+			if (conta.sacar(valor) == true)
+				System.out.println("\n Saque na Conta numero: " + numero + " foi efetuada com sucesso!");
+
+		} else
+			System.out.println("\n A Conta numero: " + numero + " não foi encontrada!");
 	}
 
 	@Override
 	public void depositar(int numero, float valor) {
-		// TODO Auto-generated method stub
+		var conta = buscarNaCollection(numero);
 
+		if (conta != null) {
+			conta.depositar(valor);
+			System.out.println("\n O Depósito na Conta numero: " + numero + " foi efetuado com sucesso!");
+		} else
+			System.out.println("\n A Conta numero: " + numero
+					+ " não foi encontrada ou a Conta destino não é uma Conta Corrente!");
 	}
 
 	@Override
 	public void transferir(int numeroOrigem, int numeroDestino, float valor) {
-		// TODO Auto-generated method stub
+		var contaOrigem = buscarNaCollection(numeroOrigem);
+		var contaDestino = buscarNaCollection(numeroDestino);
+
+		if (contaOrigem != null && contaDestino != null) {
+
+			if (contaOrigem.sacar(valor) == true) {
+				contaDestino.depositar(valor);
+				System.out.println("\n A Transferência foi efetuada com sucesso!");
+			}
+		} else
+			System.out.println("\n A Conta de Origem e/ou Destino não foram encontradas!");
 
 	}
 
@@ -83,12 +105,12 @@ conta.visualizador();
 	}
 
 	public Conta buscarNaCollection(int numero) {
-	for (var conta : listaContas) {
-		if conta.getNumero() == numero) {
-			return conta;
-			
+		for (var conta : listaContas) {
+			if (conta.getNumero() == numero) {
+				return conta;
+
+			}
 		}
+		return null;
 	}
-	return null;
-}
 }
